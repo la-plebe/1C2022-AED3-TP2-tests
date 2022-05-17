@@ -1,4 +1,5 @@
 import random
+random.seed(42069)
 
 # Tree (los arboles son siempre geodésicos)
 for N in [5, 25, 100]:
