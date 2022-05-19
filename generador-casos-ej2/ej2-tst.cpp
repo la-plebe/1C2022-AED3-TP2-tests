@@ -89,7 +89,7 @@ main() {
 	for (size_t i = 0; i < cols * rows; i++) {
 		M[i] = std::experimental::randint(0, 1);
 		if (i != 0 && i % cols == 0) std::cout << std::endl;
-		std::cout << M[i];
+		std::cout << M[i] << " ";
 	}
 
 	std::cout << std::endl << count_components() << std::endl;
