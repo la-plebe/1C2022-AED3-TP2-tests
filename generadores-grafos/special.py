@@ -24,6 +24,11 @@ def directed_cycle(n: int) -> nx.DiGraph:
     return nx.cycle_graph(n, create_using=nx.DiGraph)
 
 
+def star_graph(n: int) -> nx.Graph:
+    """Grafo estrella de n vértices"""
+    return nx.star_graph(n)
+
+
 def cactus_graph(
     min_n: int,
     *,
@@ -56,12 +61,10 @@ def cactus_graph(
     while (n := G.number_of_nodes()) < min_n:
         insert_node = random.randint(0, n - 1)
 
-        p = [insert_node, *range(n, n + line_size() - 1)]
-
         if random.random() < cycle_chance:
-            nx.add_random(G, p)
+            nx.add_cycle(G, [insert_node, *range(n, n + cycle_size() - 1)])
         else:
-            nx.add_path(G, p)
+            nx.add_path(G, [insert_node, *range(n, n + line_size())])
 
     # Por construcción, todo par de ciclos comparte a lo sumo 1 vértice ⇒ es grafo cactus
-    return p
+    return G
