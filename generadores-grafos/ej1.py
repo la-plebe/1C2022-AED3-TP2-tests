@@ -16,7 +16,7 @@ def save_problem1_instance(G: nx.Graph, name: str, geodesic: bool) -> None:
     else:
         result_str = "0"
 
-    save_instance(G, os.path.join("ej1", name), expected=result_str, weighted=False)
+    save_instance(G, os.path.join("../ej1", name), expected=result_str, weighted=False)
 
 
 def geodesic_matrix(G: nx.Graph):

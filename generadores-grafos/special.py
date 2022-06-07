@@ -35,8 +35,8 @@ def cactus_graph(
     min_n: int,
     *,
     seed=None,
-    cycle_size: Callable[[], int] | int | None = None,
-    line_size: Callable[[], int] | int | None = None,
+    cycle_size, # Callable[[], int] | int | None = None
+    line_size, # Callable[[], int] | int | None = None
     cycle_chance: float = 0.5,
 ) -> nx.Graph:
     """
