@@ -2,7 +2,7 @@ import random
 random.seed(42069)
 
 # Tree (los arboles son siempre geodésicos)
-for N in [5, 25, 100]:
+for N in [5, 25, 100, 500, 1000, 1500, 2000]:
     with open(f'./ej1/tree-{N}.in', 'w+') as f:
         f.write(f'{N} {N-1}\n')
 
@@ -20,3 +20,4 @@ for N in [5, 25, 100]:
                 parent = random.choice(tree)
                 f.write(f'{node} {parent}\n')
                 tree.append(node)
+

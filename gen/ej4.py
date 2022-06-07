@@ -37,12 +37,16 @@ def gen(n=5, C=99999):
         if not bad:
             return I
 
-N = 20000
-C = 2500
-print("N =", N)
-I = gen(N, C)
-print("I =", I)
+key = "big"
+N = 25000
+C = int(N * 0.125)
 
+print("N =", N)
+print("C =", C)
+
+I = gen(N, C)
+
+print("I =", I)
 
 with open(f'./ej4/big-{N}.in', 'w+') as f:
     f.write(f'{N}\n')

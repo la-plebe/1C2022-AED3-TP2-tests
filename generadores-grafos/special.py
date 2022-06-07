@@ -3,6 +3,8 @@ import random
 from typing import Callable, Iterable, Optional
 import networkx as nx
 
+from basic_graphs import tree
+
 
 def complete_graph(n: int) -> nx.Graph:
     """Grafo completo de n vértices"""
@@ -33,8 +35,8 @@ def cactus_graph(
     min_n: int,
     *,
     seed=None,
-    cycle_size: Callable[[], int] | int | None = None,
-    line_size: Callable[[], int] | int | None = None,
+    cycle_size, # Callable[[], int] | int | None = None
+    line_size, # Callable[[], int] | int | None = None
     cycle_chance: float = 0.5,
 ) -> nx.Graph:
     """
@@ -56,7 +58,8 @@ def cactus_graph(
 
     G = complete_graph(1)  # 1 Nodo
 
-    random.seed(seed)
+    if seed is not None:
+        random.seed(seed)
 
     while (n := G.number_of_nodes()) < min_n:
         insert_node = random.randint(0, n - 1)
@@ -67,4 +70,24 @@ def cactus_graph(
             nx.add_path(G, [insert_node, *range(n, n + line_size())])
 
     # Por construcción, todo par de ciclos comparte a lo sumo 1 vértice ⇒ es grafo cactus
+    return G
+
+
+def modified_tree(n: int, *, seed=None) -> nx.Graph:
+    """Árbol de más de n nodos modificado para tener 2 caminos mínimos entre algún par de nodos"""
+    G = tree(n, seed=seed)
+
+    if seed is not None:
+        random.seed(seed)
+
+    u = random.randint(0, n - 1)
+    v = random.randint(0, n - 1)
+
+    while v == u or G.has_edge(u, v):
+        v = random.randint(0, n - 1)
+
+    P = nx.shortest_path_length(G, source=u, target=v)
+
+    nx.add_path(G, [u, *range(n, n + P - 2), v])
+
     return G
