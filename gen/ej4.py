@@ -37,9 +37,15 @@ def gen(n=5, C=99999):
         if not bad:
             return I
 
-key = "big"
+
+# key = "big"
+# N = 25000
+# C = int(N * 0.125) # estos tienen solucion chica
+
+key = "big-sg"
 N = 25000
-C = int(N * 0.125)
+C = max(8, int(N * 0.001)) # estos tienen solucion grande
+# hay que ir tocando ↑ para cada N :)
 
 print("N =", N)
 print("C =", C)
@@ -48,7 +54,7 @@ I = gen(N, C)
 
 print("I =", I)
 
-with open(f'./ej4/big-{N}.in', 'w+') as f:
+with open(f'./ej4/{key}-{N}.in', 'w+') as f:
     f.write(f'{N}\n')
     for i in I:
         f.write(f'{i[0]} {i[1]}\n')
