@@ -38,13 +38,13 @@ def gen(n=5, C=99999):
             return I
 
 
-# key = "big"
-# N = 25000
-# C = int(N * 0.125) # estos tienen solucion chica
+key = "big"
+N = 100000
+C = int(N * 0.125) # estos tienen solucion chica
 
-key = "big-sg"
-N = 25000
-C = max(8, int(N * 0.001)) # estos tienen solucion grande
+# key = "big-sg"
+# N = 100000
+# C = max(8, int(N * 0.00035)) # estos tienen solucion grande
 # hay que ir tocando ↑ para cada N :)
 
 print("N =", N)
