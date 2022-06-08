@@ -88,6 +88,6 @@ def modified_tree(n: int, *, seed=None) -> nx.Graph:
 
     P = nx.shortest_path_length(G, source=u, target=v)
 
-    nx.add_path(G, [u, *range(n, n + P - 2), v])
+    nx.add_path(G, [u, *range(n, n + P - 1), v])
 
     return G
