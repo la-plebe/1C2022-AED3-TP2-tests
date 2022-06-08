@@ -4,18 +4,18 @@ from typing import Iterable, Optional
 import networkx as nx
 
 
-def encode_graph(G: nx.Graph | nx.DiGraph):
+def encode_graph(G): # nx.Graph | nx.DiGraph
     yield f"{G.number_of_nodes()} {G.number_of_edges()}"
     yield from nx.generate_edgelist(G, data=False)
 
 
-def encode_weighted_graph(G: nx.Graph | nx.DiGraph):
+def encode_weighted_graph(G): # nx.Graph | nx.DiGraph
     yield f"{G.number_of_nodes()} {G.number_of_edges()}"
     yield from nx.generate_edgelist(G, data=["weight"])
 
 
 def save_instance(
-    G: nx.Graph | nx.DiGraph,
+    G, # nx.Graph | nx.DiGraph
     filename: str,
     *,
     expected: Optional[Iterable[str]] = None,

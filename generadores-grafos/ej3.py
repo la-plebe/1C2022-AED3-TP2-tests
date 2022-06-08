@@ -7,7 +7,7 @@ import networkx as nx
 from encoding import save_instance
 from special import dag
 from streets import street_graph
-from weights import add_integer_weights, add_negative_cycle, remove_negative_cycles
+from weights import add_integer_weights # add_negative_cycle, remove_negative_cycles
 from basic_graphs import dense_digraph, sparse_digraph
 
 
@@ -21,6 +21,11 @@ def save_problem3_instance(G: nx.DiGraph, name: str, *, sparse: bool) -> None:
 
     save_instance(G, os.path.join("ej3", name), expected=result, weighted=True)
 
+def pairwise(iterable):
+    # pairwise('ABCDEFG') --> AB BC CD DE EF FG
+    a, b = itertools.tee(iterable)
+    next(b, None)
+    return zip(a, b)
 
 def distance_matrix(G: nx.DiGraph, *, sparse: bool) -> list[list[str]]:
     result = [
@@ -33,7 +38,7 @@ def distance_matrix(G: nx.DiGraph, *, sparse: bool) -> list[list[str]]:
                     "INF"
                     if j not in d
                     else str(
-                        sum(G[u][v]["weight"] for u, v in itertools.pairwise(d[j]))
+                        sum(G[u][v]["weight"] for u, v in pairwise(d[j]))
                     )
                 )
     else:

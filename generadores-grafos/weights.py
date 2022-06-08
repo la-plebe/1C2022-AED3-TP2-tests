@@ -7,10 +7,10 @@ import networkx as nx
 
 
 def add_random_weights(
-    G: nx.Graph | nx.DiGraph,
+    G, # nx.Graph | nx.DiGraph
     *,
     seed=None,
-    weight: Optional[Callable[[], int | float]] = None,
+    weight = None, # Optional[Callable[[], int | float]]
     min: Optional[float] = None,
     max: Optional[float] = None,
 ) -> None:
@@ -39,13 +39,13 @@ def add_random_weights(
 
 
 def add_integer_weights(
-    G: nx.Graph | nx.DiGraph, *, seed=None, min: int, max: int
+    G, *, seed=None, min: int, max: int # G: nx.Graph | nx.DiGraph
 ) -> None:
     """Agrega pesos de valor entero en el rango [min, max] a las aristas del grafo/digrafo G."""
     add_random_weights(G, seed=seed, weight=lambda: random.randint(min, max))
 
 
-def add_negative_cycle(G: nx.Graph | nx.DiGraph) -> None:
+def add_negative_cycle(G) -> None: # nx.Graph | nx.DiGraph
     """Agrega un ciclo negativo a un grafo G sin ciclos negativos"""
     cycle = nx.find_cycle(G)
     weights = map(lambda edge: G[edge[0]][edge[1]]["weight"], cycle)
