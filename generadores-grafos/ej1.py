@@ -1,3 +1,4 @@
+import itertools
 import os
 import random
 
@@ -10,13 +11,13 @@ from special import cactus_graph, complete_graph, cycle, modified_tree
 
 def save_problem1_instance(G: nx.Graph, name: str, geodesic: bool) -> None:
     if geodesic:
-        result_str = "1\n" + "\n".join(
-            " ".join(map(str, line)) for line in geodesic_matrix(G)
+        result = itertools.chain(
+            ["1"], map(lambda line: " ".join(map(str, line)), geodesic_matrix(G))
         )
     else:
-        result_str = "0"
+        result = ["0"]
 
-    save_instance(G, os.path.join("../ej1", name), expected=result_str, weighted=False)
+    save_instance(G, os.path.join("ej1", name), expected=result, weighted=False)
 
 
 def geodesic_matrix(G: nx.Graph):
@@ -41,6 +42,9 @@ if __name__ == "__main__":
 
     print("\tGenerando: árbol de 2000 vértices")
     save_problem1_instance(G=tree(2000, seed=1), name="tree2000", geodesic=True)
+
+    print("\tGenerando: árbol de 5000 vértices")
+    save_problem1_instance(G=tree(5000, seed=1), name="tree5000", geodesic=True)
 
     # Completo
     print("\tGenerando: completo de 20 vértices")
@@ -83,20 +87,26 @@ if __name__ == "__main__":
             cycle_size=lambda: 2 * random.randint(0, 50) + 1,
             line_size=lambda: random.randint(0, 50),
         ),
-        name="cactus200",
+        name="cactus3000",
         geodesic=True,
     )
 
     # Grafo denso aleatorio, casi seguramente no geodésico
     print("\tGenerando: grafo denso de 500 vértices")
-    save_problem1_instance(G=dense_connected_graph(500, seed=40), name="dense500", geodesic=False)
+    save_problem1_instance(
+        G=dense_connected_graph(500, seed=40), name="dense500", geodesic=False
+    )
 
     # Árbol modificado: elegimos 2 vértices, calculamos
     # su camino más corto, y agregamos un camino paralelo de la misma longitud
     print("\tGenerando: árbol modificado para ser no-geodésico de al menos 40 vértices")
-    save_problem1_instance(G=modified_tree(40, seed=20), name="tree_mod40", geodesic=False)
+    save_problem1_instance(
+        G=modified_tree(40, seed=20), name="tree_mod40", geodesic=False
+    )
 
     print(
         "\tGenerando: árbol modificado para ser no-geodésico de al menos 1000 vértices"
     )
-    save_problem1_instance(G=modified_tree(1000, seed=1020), name="tree_mod1000", geodesic=False)
+    save_problem1_instance(
+        G=modified_tree(1000, seed=1020), name="tree_mod1000", geodesic=False
+    )

@@ -3,7 +3,7 @@ import random
 from typing import Callable, Iterable, Optional
 import networkx as nx
 
-from basic_graphs import tree
+from basic_graphs import dense_digraph, tree
 
 
 def complete_graph(n: int) -> nx.Graph:
@@ -35,8 +35,8 @@ def cactus_graph(
     min_n: int,
     *,
     seed=None,
-    cycle_size, # Callable[[], int] | int | None = None
-    line_size, # Callable[[], int] | int | None = None
+    cycle_size: Callable[[], int] | int | None = None,
+    line_size: Callable[[], int] | int | None = None,
     cycle_chance: float = 0.5,
 ) -> nx.Graph:
     """
@@ -89,5 +89,18 @@ def modified_tree(n: int, *, seed=None) -> nx.Graph:
     P = nx.shortest_path_length(G, source=u, target=v)
 
     nx.add_path(G, [u, *range(n, n + P - 1), v])
+
+    return G
+
+
+def dag(n: int, m: int, *, seed=None) -> nx.DiGraph:
+    """DAG de n nodos y alrededor de m aristas"""
+    G = dense_digraph(n, p=2 * m / (n * (n - 1)), seed=seed)
+
+    G.remove_edges_from(
+        (j, i)
+        for i in range(G.number_of_nodes())
+        for j in range(i, G.number_of_nodes())
+    )
 
     return G

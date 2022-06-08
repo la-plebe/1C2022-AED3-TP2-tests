@@ -19,6 +19,8 @@ def street_graph(north: float, south: float, east: float, west: float) -> nx.DiG
     for u, v, d in G.edges(data=True):
         G[u][v]["weight"] = round(10 * d["travel_time"])
     
+    nx.relabel_nodes(G, {old: new for new, old in enumerate(G.nodes())}, copy=False)
+
     return G
 
 # (-34.5353, -34.5898, -58.5084, -58.4148) es bbox de zona norte en CABA (contiene a ciudad universitaria)

@@ -18,12 +18,12 @@ def sparse_digraph(n: int, *, seed=None) -> nx.DiGraph:
 
 def dense_graph(n: int, p=0.5, *, seed=None) -> nx.Graph:
     """Genera un grafo denso"""
-    return nx.fast_gnp_random_graph(n, p, seed, directed=False)
+    return nx.gnp_random_graph(n, p, seed, directed=False)
 
 
 def dense_digraph(n: int, p=0.5, *, seed=None) -> nx.DiGraph:
     """Genera un digrafo denso"""
-    return nx.fast_gnp_random_graph(n, p, seed, directed=True)
+    return nx.gnp_random_graph(n, p, seed, directed=True)
 
 
 def tree(n: int, *, seed=None) -> nx.Graph:

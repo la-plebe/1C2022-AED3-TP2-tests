@@ -1,4 +1,5 @@
 """Funciones para agregar pesos a un grafo/digrafo"""
+import itertools
 import random
 from typing import Optional, Callable
 
@@ -27,21 +28,21 @@ def add_random_weights(
             seed=seed,
             weight=lambda: random.uniform(min, max),
         )
-    elif weight_function is None:
-        weight_function = random.random
+    elif weight is None:
+        weight = random.random
 
     if seed is not None:
         random.seed(seed)
 
     for (u, v) in G.edges:
-        G[u][v]["weight"] = weight_function()
+        G[u][v]["weight"] = weight()
 
 
 def add_integer_weights(
     G: nx.Graph | nx.DiGraph, *, seed=None, min: int, max: int
 ) -> None:
     """Agrega pesos de valor entero en el rango [min, max] a las aristas del grafo/digrafo G."""
-    add_random_weights(G, seed=seed, weight_function=lambda: random.randint(min, max))
+    add_random_weights(G, seed=seed, weight=lambda: random.randint(min, max))
 
 
 def add_negative_cycle(G: nx.Graph | nx.DiGraph) -> None:
@@ -55,3 +56,29 @@ def add_negative_cycle(G: nx.Graph | nx.DiGraph) -> None:
         G[u][v]["weight"] -= delta_weight
 
     return G
+
+
+# No funciona
+# def remove_negative_cycles(G: nx.DiGraph, seed=None) -> None:
+#     if seed is not None:
+#         random.seed(seed)
+
+#     universal_node = G.number_of_nodes()
+
+#     G.add_node(universal_node)
+#     G.add_edges_from(
+#         zip(itertools.repeat(universal_node), range(universal_node)), weight=0
+#     )
+
+#     has_neg_cycle = True
+#     while has_neg_cycle:
+#         try:
+#             cycle = nx.find_negative_cycle(G, universal_node)
+#             cycle_weight = sum(G[u][v]["weight"] for u, v in itertools.pairwise(cycle))
+#             pos = random.randint(0, len(cycle) - 2)
+#             u, v = cycle[pos : pos + 2]
+#             G[u][v]["weight"] -= cycle_weight - 1
+#         except nx.NetworkXError:
+#             has_neg_cycle = False
+
+#     G.remove_node(universal_node)
